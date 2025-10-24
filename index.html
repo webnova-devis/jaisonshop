@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JaisonShop — Vêtements & Accessoires</title>
+  <meta name="description" content="JaisonShop — Boutique de vêtements et accessoires pour un style moderne.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <!-- Barre promo -->
+  <div class="promo-bar" role="status">
+    <span>Livraison 48/72h • Retours sous 14 jours • Service client 7j/7</span>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container header-inner">
+      <a class="brand" href="#" aria-label="JaisonShop Accueil">
+        <img src="logo.svg" alt="Logo JaisonShop" height="36">
+        <div class="brand-text">
+          <strong>JaisonShop</strong>
+          <small>Depuis 2025</small>
+        </div>
+      </a>
+
+      <nav class="nav" aria-label="Navigation principale">
+        <button class="nav-toggle" aria-controls="mainmenu" aria-expanded="false">☰</button>
+        <ul id="mainmenu" class="menu">
+          <li><a href="#nouveautes">Nouveautés</a></li>
+          <li><a href="#catalogue">Catalogue</a></li>
+          <li><a href="#magasins">Magasins</a></li>
+          <li><a href="#marque">La marque</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-tools">
+        <form class="search" role="search" onsubmit="event.preventDefault(); openSearch()">
+          <input type="search" placeholder="Rechercher un article…" aria-label="Rechercher">
+          <button type="submit" aria-label="Rechercher">🔎</button>
+        </form>
+        <button class="tool" onclick="openAccount()" aria-label="Compte">👤</button>
+        <button class="tool cart" onclick="openCart()" aria-label="Panier">🛒<span id="cart-count" class="badge">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Carousel -->
+  <section class="hero" id="nouveautes">
+    <div class="carousel">
+      <div class="slide active" style="background-image:url('https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1600&auto=format&fit=crop');">
+        <div class="slide-content container">
+          <h1 class="reveal-up">Élégance au quotidien</h1>
+          <p class="reveal-up delay-1">Matières soignées, coupes nettes, silhouettes modernes.</p>
+          <div class="hero-cta reveal-up delay-2">
+            <a class="btn btn-black" href="#catalogue">Découvrir</a>
+            <button class="btn btn-outline" onclick="scrollOffers()">Offres</button>
+          </div>
+        </div>
+      </div>
+      <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=1600&auto=format&fit=crop');">
+        <div class="slide-content container">
+          <h2 class="reveal-up">Essentiels du quotidien</h2>
+          <p class="reveal-up delay-1">TS, jeans, hoodies — vos bases impeccables.</p>
+          <div class="hero-cta reveal-up delay-2">
+            <a class="btn btn-black" href="#catalogue">Acheter</a>
+          </div>
+        </div>
+      </div>
+      <div class="slide" style="background-image:url('https://images.unsplash.com/photo-1520975922284-5c35d71359b1?q=80&w=1600&auto=format&fit=crop');">
+        <div class="slide-content container">
+          <h2 class="reveal-up">Costumes & Blazers</h2>
+          <p class="reveal-up delay-1">Habillez vos rendez‑vous majeurs.</p>
+          <div class="hero-cta reveal-up delay-2">
+            <a class="btn btn-black" href="#catalogue">Voir</a>
+          </div>
+        </div>
+      </div>
+      <button class="c-prev" aria-label="Précédent">‹</button>
+      <button class="c-next" aria-label="Suivant">›</button>
+      <div class="dots" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- Carousel Produits (mise en avant) -->
+  <section class="container highlight">
+    <h2>Nos coups de ❤️</h2>
+    <div class="prod-carousel" id="prod-carousel">
+      <!-- items injectés --> 
+    </div>
+    <div class="pc-controls">
+      <button class="btn btn-outline" id="pc-prev">◀</button>
+      <button class="btn btn-outline" id="pc-next">▶</button>
+    </div>
+  </section>
+
+  <!-- Catalogue -->
+  <section id="catalogue" class="container">
+    <header class="catalogue-header">
+      <h2>Catalogue</h2>
+      <div class="filters">
+        <select id="filterCat" aria-label="Filtrer par catégorie">
+          <option value="all">Tout</option>
+          <option value="hauts">Hauts</option>
+          <option value="bas">Bas</option>
+          <option value="costumes">Costumes</option>
+          <option value="accessoires">Accessoires</option>
+        </select>
+        <select id="sortBy" aria-label="Trier par">
+          <option value="pop">Populaires</option>
+          <option value="asc">Prix croissant</option>
+          <option value="desc">Prix décroissant</option>
+        </select>
+      </div>
+    </header>
+    <div id="product-grid" class="grid"></div>
+    <div class="pagination">
+      <button class="btn btn-outline" onclick="prevPage()">Préc.</button>
+      <span id="page-indicator">1</span>
+      <button class="btn btn-outline" onclick="nextPage()">Suiv.</button>
+    </div>
+  </section>
+
+  <!-- Offres -->
+  <section id="offres" class="offers container">
+    <article class="offer-card reveal-up">
+      <strong>TEE‑SHIRTS</strong><span>2 pour 29,98€</span>
+      <button class="btn btn-black" data-stripe="ts">J'en profite</button>
+    </article>
+    <article class="offer-card reveal-up delay-1">
+      <strong>CHEMISES</strong><span>2 pour 79,98€</span>
+      <button class="btn btn-black" data-stripe="chemises">J'en profite</button>
+    </article>
+    <article class="offer-card reveal-up delay-2">
+      <strong>JEANS</strong><span>2 pour 109,98€</span>
+      <button class="btn btn-black" data-stripe="jeans">J'en profite</button>
+    </article>
+  </section>
+
+  <!-- Magasins / Store Locator -->
+  <section id="magasins" class="container locator">
+    <header>
+      <h2>Nos magasins</h2>
+      <p>Choisissez une ville pour voir l'emplacement.</p>
+    </header>
+    <div class="locator-grid">
+      <div class="stores">
+        <button class="store-btn" data-lat="48.8566" data-lon="2.3522" data-label="Paris — Rivoli">Paris — Rivoli</button>
+        <button class="store-btn" data-lat="43.1242" data-lon="5.9280" data-label="Toulon — Centre">Toulon — Centre</button>
+        <button class="store-btn" data-lat="45.7640" data-lon="4.8357" data-label="Lyon — Presqu'île">Lyon — Presqu'île</button>
+      </div>
+      <iframe id="map" title="Carte magasins" src="https://www.openstreetmap.org/export/embed.html?bbox=2.30%2C48.84%2C2.38%2C48.88&layer=mapnik&marker=48.8566%2C2.3522"></iframe>
+    </div>
+  </section>
+
+  <!-- Marque -->
+  <section id="marque" class="container brand-bloc">
+    <h2>La marque</h2>
+    <p>Chez <strong>JaisonShop</strong>, on mise sur des pièces intemporelles, bien coupées, pensées pour durer.</p>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="container contact">
+    <h2>Contact</h2>
+    <form onsubmit="event.preventDefault(); sendContact()">
+      <div class="row">
+        <input type="text" placeholder="Votre nom" required>
+        <input type="email" placeholder="Votre email" required>
+      </div>
+      <textarea rows="4" placeholder="Votre message" required></textarea>
+      <button class="btn btn-black">Envoyer</button>
+    </form>
+  </section>
+
+  <!-- Compte (modal démo) -->
+  <dialog id="account-modal">
+    <form method="dialog" class="account-box">
+      <h3>Mon compte</h3>
+      <input type="email" placeholder="Email" required>
+      <input type="password" placeholder="Mot de passe" required>
+      <div class="modal-actions">
+        <button class="btn btn-black" value="login">Se connecter</button>
+        <button class="btn btn-outline" value="cancel">Fermer</button>
+      </div>
+      <p class="hint">Démo front : pas de backend. Intégrer Firebase/Clerk plus tard.</p>
+    </form>
+  </dialog>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>JaisonShop</strong>
+        <p><small>© 2025 — JaisonShop / Jaison Visse</small></p>
+      </div>
+      <nav aria-label="Liens utiles">
+        <a href="#magasins">Nos magasins</a>
+        <a href="#marque">La marque</a>
+        <a href="#offres">Offres</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="newsletter">
+        <form onsubmit="event.preventDefault(); subscribe()">
+          <label for="email">Newsletter</label>
+          <div class="row">
+            <input id="email" type="email" placeholder="Votre email" required>
+            <button class="btn btn-black">S'inscrire</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

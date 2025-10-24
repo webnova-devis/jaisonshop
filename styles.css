@@ -1,0 +1,122 @@
+/* JaisonShop — Thème blanc/noir minimal + carrousels + animations */
+:root{
+  --bg:#ffffff;
+  --text:#111111;
+  --muted:#6b7280;
+  --line:#e5e7eb;
+  --black:#111111;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+a{color:inherit;text-decoration:none}
+
+/* Promo bar */
+.promo-bar{
+  background:var(--black);
+  color:white;
+  text-align:center;
+  padding:8px 12px;
+  font-weight:700;
+}
+
+/* Header */
+.header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.header-inner{display:flex;align-items:center;gap:16px;justify-content:space-between;padding:14px 0}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-text small{display:block;color:var(--muted)}
+.nav .menu{display:flex;gap:16px;list-style:none;margin:0;padding:0}
+.nav-toggle{display:none}
+.header-tools{display:flex;gap:10px;align-items:center}
+.search{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.search input{background:transparent;border:none;color:var(--text);padding:8px 10px;outline:none;width:180px}
+.search button{background:transparent;border:none;padding:8px 10px;cursor:pointer}
+.tool{border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+.badge{background:var(--black);color:white;border-radius:999px;font-size:12px;padding:2px 6px;margin-left:4px}
+
+/* Hero Carousel */
+.hero{border-bottom:1px solid var(--line)}
+.carousel{position:relative;height:56vh;min-height:380px;overflow:hidden}
+.slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.02);transition:opacity .8s ease, transform 1.5s ease}
+.slide.active{opacity:1;transform:scale(1)}
+.slide::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.25))}
+.slide-content{position:relative;z-index:1;color:white;display:flex;flex-direction:column;justify-content:center;height:100%}
+.hero-cta{display:flex;gap:10px;margin-top:10px}
+.c-prev,.c-next{position:absolute;top:50%;transform:translateY(-50%);border:none;background:rgba(17,17,17,.6);color:white;width:42px;height:42px;border-radius:999px;cursor:pointer}
+.c-prev{left:10px}.c-next{right:10px}
+.dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+.dots button{width:8px;height:8px;border-radius:999px;border:none;background:#ffffff80}
+.dots button.active{background:white}
+
+/* Product highlight carousel */
+.highlight{padding:26px 0}
+.prod-carousel{display:grid;grid-auto-flow:column;grid-auto-columns:calc(25% - 12px);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
+.prod-carousel .pitem{scroll-snap-align:start;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:white;min-width:240px}
+.pitem img{height:200px;width:100%;object-fit:cover}
+.pitem .body{padding:10px}
+.pc-controls{display:flex;gap:10px;justify-content:flex-end;margin-top:8px}
+
+/* Catalogue */
+.catalogue-header{display:flex;align-items:center;justify-content:space-between;margin:20px 0 10px}
+.filters{display:flex;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:white;box-shadow:0 1px 1px rgba(0,0,0,.02);transition:transform .25s ease, box-shadow .25s ease}
+.card:hover{transform:translateY(-6px);box-shadow:0 16px 30px rgba(0,0,0,.08)}
+.thumb{height:260px;background:#f3f4f6;display:block;width:100%;object-fit:cover}
+.card-body{padding:12px}
+.price{font-weight:800}
+.old{color:var(--muted);text-decoration:line-through;margin-left:8px}
+.badge-promo{background:var(--black);color:white;border-radius:6px;padding:2px 6px;font-size:12px;margin-left:8px}
+
+/* Offers */
+.offers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:26px auto}
+.offer-card{border:1px solid var(--line);border-radius:14px;padding:18px;background:white;display:flex;align-items:center;justify-content:space-between}
+
+/* Locator */
+.locator header p{color:var(--muted)}
+.locator-grid{display:grid;grid-template-columns:320px 1fr;gap:16px;align-items:start}
+.stores{display:flex;flex-direction:column;gap:10px}
+.store-btn{padding:10px;border:1px solid var(--line);border-radius:10px;background:white;cursor:pointer;text-align:left}
+#map{width:100%;height:360px;border:1px solid var(--line);border-radius:12px}
+
+/* Brand & Contact */
+.brand-bloc{padding:26px 0;border-top:1px solid var(--line)}
+.contact .row{display:flex;gap:10px}
+.contact input, .contact textarea{padding:12px;border-radius:10px;border:1px solid var(--line);width:100%}
+
+/* Account modal */
+dialog::backdrop{background:rgba(0,0,0,.3)}
+#account-modal{border:none;border-radius:16px;padding:0}
+.account-box{padding:18px 18px 14px;display:flex;flex-direction:column;gap:10px;width:320px}
+.account-box input{padding:10px;border:1px solid var(--line);border-radius:10px}
+.hint{color:var(--muted);font-size:12px}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end}
+
+/* Footer */
+.footer{border-top:1px solid var(--line);padding:20px 0;margin-top:20px;background:white}
+.footer-inner{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.newsletter .row{display:flex;gap:8px;margin-top:6px}
+.newsletter input{padding:10px;border-radius:8px;border:1px solid var(--line);min-width:220px}
+
+/* Animations: reveal on scroll */
+.reveal-up{opacity:0;transform:translateY(8px);transition:opacity .6s ease, transform .6s ease}
+.reveal-up.show{opacity:1;transform:none}
+.delay-1{transition-delay:.1s}.delay-2{transition-delay:.2s}
+
+/* Responsive */
+@media (max-width: 980px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .offers{grid-template-columns:1fr}
+  .locator-grid{grid-template-columns:1fr}
+  .nav .menu{display:none}
+  .nav-toggle{display:inline-flex;background:transparent;border:1px solid var(--line);border-radius:8px;padding:8px}
+  .carousel{height:46vh}
+  .prod-carousel{grid-auto-columns:calc(70% - 10px)}
+}
