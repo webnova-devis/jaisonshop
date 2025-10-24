@@ -44,8 +44,13 @@
           <input type="search" placeholder="Rechercher un article…" aria-label="Rechercher">
           <button type="submit" aria-label="Rechercher">🔎</button>
         </form>
+<<<<<<< HEAD
+        <button id="account-btn" class="tool" onclick="openAccount()" aria-label="Compte">👤</button>
+        <button class="tool cart" onclick="cartOpen()" aria-label="Panier">🛒<span id="cart-count" class="badge">0</span></button>
+=======
         <button class="tool" onclick="openAccount()" aria-label="Compte">👤</button>
         <button class="tool cart" onclick="openCart()" aria-label="Panier">🛒<span id="cart-count" class="badge">0</span></button>
+>>>>>>> 8b3ee964e30697230dea8e20d3b88417de95d3cf
       </div>
     </div>
   </header>
@@ -87,6 +92,8 @@
     </div>
   </section>
 
+<<<<<<< HEAD
+=======
   <!-- Carousel Produits (mise en avant) -->
   <section class="container highlight">
     <h2>Nos coups de ❤️</h2>
@@ -99,6 +106,7 @@
     </div>
   </section>
 
+>>>>>>> 8b3ee964e30697230dea8e20d3b88417de95d3cf
   <!-- Catalogue -->
   <section id="catalogue" class="container">
     <header class="catalogue-header">
@@ -126,6 +134,8 @@
     </div>
   </section>
 
+<<<<<<< HEAD
+=======
   <!-- Offres -->
   <section id="offres" class="offers container">
     <article class="offer-card reveal-up">
@@ -142,6 +152,7 @@
     </article>
   </section>
 
+>>>>>>> 8b3ee964e30697230dea8e20d3b88417de95d3cf
   <!-- Magasins / Store Locator -->
   <section id="magasins" class="container locator">
     <header>
@@ -150,9 +161,15 @@
     </header>
     <div class="locator-grid">
       <div class="stores">
+<<<<<<< HEAD
+        <button class="store-btn" data-lat="48.8566" data-lon="2.3522">Paris — Rivoli</button>
+        <button class="store-btn" data-lat="43.1242" data-lon="5.9280">Toulon — Centre</button>
+        <button class="store-btn" data-lat="45.7640" data-lon="4.8357">Lyon — Presqu'île</button>
+=======
         <button class="store-btn" data-lat="48.8566" data-lon="2.3522" data-label="Paris — Rivoli">Paris — Rivoli</button>
         <button class="store-btn" data-lat="43.1242" data-lon="5.9280" data-label="Toulon — Centre">Toulon — Centre</button>
         <button class="store-btn" data-lat="45.7640" data-lon="4.8357" data-label="Lyon — Presqu'île">Lyon — Presqu'île</button>
+>>>>>>> 8b3ee964e30697230dea8e20d3b88417de95d3cf
       </div>
       <iframe id="map" title="Carte magasins" src="https://www.openstreetmap.org/export/embed.html?bbox=2.30%2C48.84%2C2.38%2C48.88&layer=mapnik&marker=48.8566%2C2.3522"></iframe>
     </div>
@@ -177,6 +194,71 @@
     </form>
   </section>
 
+<<<<<<< HEAD
+  <!-- Cart Drawer (slide right) -->
+  <aside id="cart-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <h3>Votre panier</h3>
+      <button class="close" aria-label="Fermer le panier" onclick="cartClose()">✕</button>
+    </div>
+    <div id="cart-items" class="drawer-body"></div>
+    <div class="drawer-footer">
+      <div class="row">
+        <span>Total</span>
+        <strong id="cart-total">€0.00</strong>
+      </div>
+      <div class="actions">
+        <button class="btn btn-outline" onclick="cartClear()">Vider</button>
+        <button class="btn btn-black" onclick="cartCheckout()">Payer maintenant</button>
+      </div>
+      <p class="hint">Redirection vers vos Payment Links Stripe (démo).</p>
+    </div>
+  </aside>
+  <div id="cart-backdrop" onclick="cartClose()" aria-hidden="true"></div>
+
+  <!-- Account Modal (glass + flip) -->
+  <div id="auth-backdrop" class="auth-backdrop" onclick="closeAccount()"></div>
+  <section id="auth-modal" aria-hidden="true" class="auth-modal">
+    <div class="auth-card" id="auth-card">
+      <div class="auth-face auth-login">
+        <h3>Se connecter</h3>
+        <form onsubmit="event.preventDefault(); loginSubmit()">
+          <label>Email</label>
+          <input id="login-email" type="email" placeholder="email@exemple.com" required>
+          <label>Mot de passe</label>
+          <div class="pwd">
+            <input id="login-pass" type="password" placeholder="••••••••" required>
+            <button type="button" class="eye" onclick="togglePwd('login-pass')">👁️</button>
+          </div>
+          <div class="row smallrow">
+            <label><input id="keep-login" type="checkbox" checked> Rester connecté</label>
+          </div>
+          <button class="btn btn-black" type="submit">Connexion</button>
+        </form>
+        <p class="hint">Pas de compte ? <button class="link" onclick="flipTo('register')">Créer un compte</button></p>
+      </div>
+      <div class="auth-face auth-register">
+        <h3>Créer un compte</h3>
+        <form onsubmit="event.preventDefault(); registerSubmit()">
+          <label>Email</label>
+          <input id="reg-email" type="email" placeholder="email@exemple.com" required>
+          <label>Mot de passe</label>
+          <div class="pwd">
+            <input id="reg-pass" type="password" placeholder="Minimum 6 caractères" minlength="6" required>
+            <button type="button" class="eye" onclick="togglePwd('reg-pass')">👁️</button>
+          </div>
+          <label>Confirmer le mot de passe</label>
+          <div class="pwd">
+            <input id="reg-pass2" type="password" placeholder="Retapez le mot de passe" required>
+            <button type="button" class="eye" onclick="togglePwd('reg-pass2')">👁️</button>
+          </div>
+          <button class="btn btn-black" type="submit">Créer le compte</button>
+        </form>
+        <p class="hint">Déjà inscrit ? <button class="link" onclick="flipTo('login')">Se connecter</button></p>
+      </div>
+    </div>
+  </section>
+=======
   <!-- Compte (modal démo) -->
   <dialog id="account-modal">
     <form method="dialog" class="account-box">
@@ -190,6 +272,7 @@
       <p class="hint">Démo front : pas de backend. Intégrer Firebase/Clerk plus tard.</p>
     </form>
   </dialog>
+>>>>>>> 8b3ee964e30697230dea8e20d3b88417de95d3cf
 
   <!-- Footer -->
   <footer class="footer">
@@ -201,7 +284,10 @@
       <nav aria-label="Liens utiles">
         <a href="#magasins">Nos magasins</a>
         <a href="#marque">La marque</a>
+<<<<<<< HEAD
+=======
         <a href="#offres">Offres</a>
+>>>>>>> 8b3ee964e30697230dea8e20d3b88417de95d3cf
         <a href="#contact">Contact</a>
       </nav>
       <div class="newsletter">
