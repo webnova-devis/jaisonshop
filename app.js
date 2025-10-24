@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+// ---------------- Produits (images Unsplash) ----------------
+=======
 // --- Produits avec images (Unsplash) ---
+>>>>>>> 8b3ee964e30697230dea8e20d3b88417de95d3cf
 const products = [
   {id:1, name:'T‑shirt col rond', cat:'hauts', price:14.99, old:null, promo:false, img:'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=1200&auto=format&fit=crop'},
   {id:2, name:'Chemise stretch', cat:'hauts', price:39.99, old:49.99, promo:true, img:'https://images.unsplash.com/photo-1520975922284-5c35d71359b1?q=80&w=1200&auto=format&fit=crop'},
@@ -14,6 +18,20 @@ const products = [
   {id:12,name:'Gilet mérinos', cat:'hauts', price:49.99, old:null, promo:false, img:'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=1200&auto=format&fit=crop'},
 ];
 
+<<<<<<< HEAD
+// ---------------- Stripe links (placeholder) ----------------
+const stripeLinks = {
+  ts: "https://buy.stripe.com/test_123ts",
+  chemises: "https://buy.stripe.com/test_123chem",
+  jeans: "https://buy.stripe.com/test_123jean"
+};
+
+// ---------------- Panier (V4) ----------------
+let page = 1;
+const perPage = 8;
+let cart = [];
+const CART_KEY = 'jaisonshop_cart_v1';
+=======
 // Stripe Payment Links (remplacer par vos liens Stripe réels)
 const stripeLinks = {
   ts: "https://buy.stripe.com/test_123ts",        // tee-shirts offre
@@ -24,10 +42,30 @@ const stripeLinks = {
 let page = 1;
 const perPage = 8;
 let cart = [];
+>>>>>>> 8b3ee964e30697230dea8e20d3b88417de95d3cf
 
 const grid = document.getElementById('product-grid');
 const filterCat = document.getElementById('filterCat');
 const sortBy = document.getElementById('sortBy');
+<<<<<<< HEAD
+const cartCount = document.getElementById('cart-count');
+const drawer = document.getElementById('cart-drawer');
+const backdrop = document.getElementById('cart-backdrop');
+const itemsWrap = document.getElementById('cart-items');
+const totalEl = document.getElementById('cart-total');
+
+function cartLoad(){ try{ cart = JSON.parse(localStorage.getItem(CART_KEY))||[]; }catch(e){ cart=[]; } cartBadge(); }
+function cartSave(){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); }
+function cartBadge(){ cartCount.textContent = cart.reduce((s,i)=>s+i.qty,0); }
+
+function renderProducts(){
+  let list = [...products];
+  if(filterCat.value !== 'all') list = list.filter(p => p.cat === filterCat.value);
+  if(sortBy.value === 'asc') list.sort((a,b)=>a.price-b.price);
+  if(sortBy.value === 'desc') list.sort((a,b)=>b.price-a.price);
+  const start = (page-1)*perPage;
+  const pageItems = list.slice(start, start+perPage);
+=======
 
 function renderProducts(){
   let list = [...products];
@@ -44,6 +82,7 @@ function renderProducts(){
   const start = (page-1)*perPage;
   const pageItems = list.slice(start, start+perPage);
 
+>>>>>>> 8b3ee964e30697230dea8e20d3b88417de95d3cf
   grid.innerHTML = '';
   pageItems.forEach(p => {
     const card = document.createElement('article');
@@ -60,13 +99,144 @@ function renderProducts(){
           ${p.old ? '<span class="old">€'+p.old.toFixed(2)+'</span>' : ''}
         </div>
         <div style="display:flex; gap:8px;">
+<<<<<<< HEAD
+          <button class="btn btn-black" onclick="addToCart(${p.id})">Ajouter</button>
+=======
           <button class="btn btn-black" onclick="addToCart(${p.id})">Panier</button>
+>>>>>>> 8b3ee964e30697230dea8e20d3b88417de95d3cf
           <button class="btn btn-outline" onclick="buyNow(${p.id})">Acheter</button>
         </div>
       </div>
     `;
     grid.appendChild(card);
   });
+<<<<<<< HEAD
+  document.getElementById('page-indicator').textContent = page;
+  revealRefresh();
+}
+function nextPage(){ page++; renderProducts(); }
+function prevPage(){ if(page>1){ page--; renderProducts(); } }
+
+function addToCart(id, qty=1){
+  const p = products.find(x=>x.id===id); if(!p) return;
+  const i = cart.findIndex(x=>x.id===id);
+  if(i>-1){ cart[i].qty += qty; } else { cart.push({id:p.id, name:p.name, price:p.price, img:p.img, qty}); }
+  cartSave(); cartBadge(); cartRender(); cartOpen();
+}
+function cartInc(id){ const i = cart.findIndex(x=>x.id===id); if(i<0) return; cart[i].qty++; cartSave(); cartBadge(); cartRender(); }
+function cartDec(id){ const i = cart.findIndex(x=>x.id===id); if(i<0) return; cart[i].qty--; if(cart[i].qty<=0) cart.splice(i,1); cartSave(); cartBadge(); cartRender(); }
+function cartRemove(id){ const i = cart.findIndex(x=>x.id===id); if(i<0) return; cart.splice(i,1); cartSave(); cartBadge(); cartRender(); }
+function cartClear(){ cart=[]; cartSave(); cartBadge(); cartRender(); }
+function cartTotal(){ return cart.reduce((s,i)=>s + i.price*i.qty, 0); }
+function cartRender(){
+  if(cart.length===0){ itemsWrap.innerHTML = '<p class="hint">Votre panier est vide.</p>'; }
+  else{
+    itemsWrap.innerHTML = '';
+    cart.forEach(it=>{
+      const row = document.createElement('div');
+      row.className = 'cart-item';
+      row.innerHTML = `
+        <img src="${it.img}" alt="${it.name}">
+        <div>
+          <h4>${it.name}</h4>
+          <div>€${it.price.toFixed(2)}</div>
+          <div class="qty">
+            <button onclick="cartDec(${it.id})">−</button>
+            <span>${it.qty}</span>
+            <button onclick="cartInc(${it.id})">+</button>
+          </div>
+        </div>
+        <div><button class="remove" onclick="cartRemove(${it.id})">Supprimer</button></div>`;
+      itemsWrap.appendChild(row);
+    });
+  }
+  totalEl.textContent = '€' + cartTotal().toFixed(2);
+}
+function cartOpen(){ drawer.classList.add('open'); backdrop.classList.add('show'); drawer.setAttribute('aria-hidden','false'); }
+function cartClose(){ drawer.classList.remove('open'); backdrop.classList.remove('show'); drawer.setAttribute('aria-hidden','true'); }
+function cartCheckout(){
+  if(cart.length===0) return alert('Votre panier est vide.');
+  const freq = {hauts:0, bas:0, costumes:0, accessoires:0};
+  cart.forEach(it=>{ const p = products.find(x=>x.id===it.id); if(p) freq[p.cat]=(freq[p.cat]||0)+it.qty; });
+  let best='hauts',max=-1; for(const k in freq){ if(freq[k]>max){max=freq[k]; best=k;} }
+  let link=null; if(best==='hauts') link=stripeLinks.ts; else if(best==='bas') link=stripeLinks.jeans; else if(best==='costumes') link=stripeLinks.chemises; else if(best==='accessoires') link=stripeLinks.ts;
+  if(link) window.open(link,'_blank'); else alert('Lien Stripe non configuré.');
+}
+function buyNow(id){
+  const item = products.find(p=>p.id===id); if(!item) return;
+  let link=null; if(item.cat==='hauts') link=stripeLinks.ts; else if(item.cat==='bas') link=stripeLinks.jeans; else if(item.cat==='costumes') link=stripeLinks.chemises; else if(item.cat==='accessoires') link=stripeLinks.ts;
+  if(link) window.open(link,'_blank'); else alert('Lien Stripe non configuré.');
+}
+
+// ---------------- Auth (V5) ----------------
+const USERS_KEY = 'jaisonshop_users_v1';
+const SESSION_KEY = 'jaisonshop_session_v1';
+const authBackdrop = document.getElementById('auth-backdrop');
+const authModal = document.getElementById('auth-modal');
+const authCard = document.getElementById('auth-card');
+const accountBtn = document.getElementById('account-btn');
+
+function openAccount(){ authBackdrop.classList.add('show'); authModal.classList.add('show'); authModal.setAttribute('aria-hidden','false'); }
+function closeAccount(){ authBackdrop.classList.remove('show'); authModal.classList.remove('show'); authModal.setAttribute('aria-hidden','true'); }
+
+function flipTo(which){
+  if(which==='register') authCard.classList.add('flipped');
+  else authCard.classList.remove('flipped');
+}
+function togglePwd(id){
+  const el = document.getElementById(id);
+  el.type = el.type === 'password' ? 'text' : 'password';
+}
+
+function usersLoad(){ try{ return JSON.parse(localStorage.getItem(USERS_KEY))||[]; }catch(e){ return []; } }
+function usersSave(list){ localStorage.setItem(USERS_KEY, JSON.stringify(list)); }
+function sessionSet(email, persist=true){ const data={email, ts:Date.now()}; localStorage.setItem(SESSION_KEY, JSON.stringify(data)); updateAccountUI(); }
+function sessionGet(){ try{ return JSON.parse(localStorage.getItem(SESSION_KEY)); }catch(e){ return null; } }
+function sessionClear(){ localStorage.removeItem(SESSION_KEY); updateAccountUI(); }
+
+function registerSubmit(){
+  const email = document.getElementById('reg-email').value.trim().toLowerCase();
+  const pass = document.getElementById('reg-pass').value;
+  const pass2 = document.getElementById('reg-pass2').value;
+  if(pass !== pass2){ alert('Les mots de passe ne correspondent pas.'); return; }
+  if(pass.length < 6){ alert('Mot de passe trop court (min 6).'); return; }
+  const users = usersLoad();
+  if(users.find(u=>u.email===email)){ alert('Un compte existe déjà avec cet email.'); return; }
+  users.push({email, pass}); // Démo : stocké en clair (pour la production, utiliser un backend sécurisé)
+  usersSave(users);
+  alert('Compte créé ! Vous pouvez vous connecter.');
+  flipTo('login');
+}
+
+function loginSubmit(){
+  const email = document.getElementById('login-email').value.trim().toLowerCase();
+  const pass = document.getElementById('login-pass').value;
+  const keep = document.getElementById('keep-login').checked;
+  const users = usersLoad();
+  const ok = users.find(u=>u.email===email && u.pass===pass);
+  if(!ok){ alert('Email ou mot de passe incorrect.'); return; }
+  sessionSet(email, keep);
+  closeAccount();
+  alert('Bienvenue ' + email + ' 👋');
+}
+
+function updateAccountUI(){
+  const s = sessionGet();
+  if(s && s.email){
+    const name = s.email.split('@')[0];
+    accountBtn.textContent = '👤 ' + name;
+    accountBtn.onclick = () => {
+      const confirmOut = confirm('Connecté en tant que ' + s.email + '\n\nSe déconnecter ?');
+      if(confirmOut){ sessionClear(); accountBtn.textContent = '👤'; accountBtn.onclick = openAccount; }
+    };
+  }else{
+    accountBtn.textContent = '👤';
+    accountBtn.onclick = openAccount;
+  }
+}
+
+// ---------------- Divers (hero, locator, reveal) ----------------
+=======
 
   document.getElementById('page-indicator').textContent = page;
   revealRefresh();
@@ -126,6 +296,7 @@ filterCat.addEventListener('change', ()=>{ page=1; renderProducts(); });
 sortBy.addEventListener('change', ()=>{ page=1; renderProducts(); });
 
 // ---------- Carousel Hero ----------
+>>>>>>> 8b3ee964e30697230dea8e20d3b88417de95d3cf
 const slides = Array.from(document.querySelectorAll('.slide'));
 const dotsWrap = document.querySelector('.dots');
 let idx = 0;
@@ -146,6 +317,10 @@ document.querySelector('.c-next').addEventListener('click', ()=> goTo((idx+1)%sl
 document.querySelector('.c-prev').addEventListener('click', ()=> goTo((idx-1+slides.length)%slides.length));
 setInterval(()=>goTo((idx+1)%slides.length), 6000);
 
+<<<<<<< HEAD
+function scrollOffers(){ const el=document.getElementById('catalogue'); el&&el.scrollIntoView({behavior:'smooth'}); }
+
+=======
 function scrollOffers(){ document.getElementById('offres').scrollIntoView({behavior:'smooth'}); }
 
 // ---------- Highlight Product Carousel (horiz. scroll) ----------
@@ -173,6 +348,7 @@ document.getElementById('pc-prev').addEventListener('click', ()=> pc.scrollBy({l
 document.getElementById('pc-next').addEventListener('click', ()=> pc.scrollBy({left:320, behavior:'smooth'}));
 
 // ---------- Locator ----------
+>>>>>>> 8b3ee964e30697230dea8e20d3b88417de95d3cf
 const map = document.getElementById('map');
 document.querySelectorAll('.store-btn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
@@ -182,7 +358,10 @@ document.querySelectorAll('.store-btn').forEach(btn=>{
   });
 });
 
+<<<<<<< HEAD
+=======
 // ---------- Reveal on scroll ----------
+>>>>>>> 8b3ee964e30697230dea8e20d3b88417de95d3cf
 let observer;
 function revealRefresh(){
   if(observer) observer.disconnect();
@@ -192,6 +371,14 @@ function revealRefresh(){
   document.querySelectorAll('.reveal-up').forEach(el=>observer.observe(el));
 }
 
+<<<<<<< HEAD
+function openSearch(){ alert('Recherche à implémenter (démo)'); }
+function subscribe(){ alert('Merci ! Vous êtes inscrit.'); }
+function sendContact(){ alert('Message envoyé !'); }
+
+// ---------------- Boot ----------------
+cartLoad(); cartRender(); renderProducts(); revealRefresh(); updateAccountUI();
+=======
 // ---------- Stripe buttons (offres) ----------
 document.addEventListener('click', (e)=>{
   const btn = e.target.closest('[data-stripe]');
@@ -206,3 +393,4 @@ document.addEventListener('click', (e)=>{
 renderProducts();
 renderHighlight();
 revealRefresh();
+>>>>>>> 8b3ee964e30697230dea8e20d3b88417de95d3cf
